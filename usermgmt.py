@@ -64,7 +64,7 @@ if __name__ == "__main__":
     API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/allyoucaneat'
     TeamName = 'allyoucaneat'
 
-    create_team(API_URL_create_team,TeamName)
+    #create_team(API_URL_create_team,TeamName)
 
     phone_num = input('Please enter your German number without space and + sign')
 
@@ -73,4 +73,9 @@ if __name__ == "__main__":
     send_sms(API_URL_send_sms)
 
     messages = retrieve_sms(API_URL_retrieve_sms)
-    print(messages)
+    for user_id, message_list in messages.items():
+        print(f"\nMessages for User ID {user_id}:")
+        for msg in message_list:
+            text = msg.get("text", "No text")
+            received_at = msg.get("receivedAt", "Unknown time")
+            print(f"  - {text} (Received at: {received_at})")
