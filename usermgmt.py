@@ -44,10 +44,24 @@ def send_sms(api_url):
         print('Message not delivered')
         print('Response:', response.text)
 
+
+def retrieve_sms(api_url):
+
+    response = requests.get(API_URL_retrieve_sms)
+
+    if response.status_code == 200:
+        messages = response.json()
+        return messages
+
+    else:
+        print(f'Error: {response.status_code}')
+
+
 if __name__ == "__main__":
     API_URL_create_team = 'http://hackathons.masterschool.com:3030/team/addNewTeam'
     API_URL_register_num = 'http://hackathons.masterschool.com:3030/team/registerNumber'
     API_URL_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
+    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/allyoucaneat'
     TeamName = 'allyoucaneat'
 
     create_team(API_URL_create_team,TeamName)
@@ -57,3 +71,6 @@ if __name__ == "__main__":
     register_numbers(API_URL_register_num, phone_num)
 
     send_sms(API_URL_send_sms)
+
+    messages = retrieve_sms(API_URL_retrieve_sms)
+    print(messages)
