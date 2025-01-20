@@ -1,20 +1,18 @@
 import json
 import os
 
-def save_json(data, json_file_name):
-    """
-    Save the provided data as a JSON file in the 'data' subfolder.
+def save_json(data, data_file_name):
 
-    Parameters:
-    - data: The Python object (e.g., dictionary) to be serialized to JSON.
-    - json_file_name: The name of the JSON file (without extension) to save the data.
-    """
-    data_file_path = os.path.join(data, json_file_name + ".json")
+    data_file_path = os.path.join(data, data_file_name)
     with open(data_file_path, 'w') as file:
         json.dump(data, file, indent=4)
 
 def load_json(data_file_name):
 
+    with open(data_file_name, 'r') as file:
+        data = json.load(file)
+
+    return data
 
 
 def main():
