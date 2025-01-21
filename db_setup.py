@@ -45,5 +45,5 @@ def get_user_by_phone_number(session, model, phone_number):
     if record:
         return record
     else:
-        print(f"No record found with user_name: {phone_number}")
+        print(f"No record found with phone_number: {phone_number}")
         return None
