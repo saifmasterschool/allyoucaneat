@@ -12,14 +12,6 @@ session = Session()
 Base.metadata.create_all(engine)
 
 
-
-
-
-
-
-
-
-
 def add_item(session, model, **kwargs):
     new_record = model(**kwargs)
     session.add(new_record)
@@ -48,7 +40,10 @@ def update_record(session, model, record_id, **kwargs):
         print(f"Record with ID {record_id} not found.")
 
 
-
-
-def get_user(tel_number):
-    pass
+def get_user_by_phone_number(session, model, phone_number):
+    record = session.query(model).filter(model.phone_number == phone_number).first()
+    if record:
+        return record
+    else:
+        print(f"No record found with user_name: {phone_number}")
+        return None

@@ -58,6 +58,7 @@ def retrieve_sms(api_url):
 
 
 if __name__ == "__main__":
+
     API_URL_create_team = 'http://hackathons.masterschool.com:3030/team/addNewTeam'
     API_URL_register_num = 'http://hackathons.masterschool.com:3030/team/registerNumber'
     API_URL_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'

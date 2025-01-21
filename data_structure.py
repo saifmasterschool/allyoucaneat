@@ -14,9 +14,11 @@ class User(Base):
     delivery_frequency = Column(String, nullable=False, default='on_demand')
     delivery_time = Column(String, nullable=False, default='18:00')
     active = Column(Boolean, nullable=False, default=True)
-    created_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc),
-                        onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, nullable=False,
+                        default=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"))
+    updated_at = Column(DateTime, nullable=False,
+                        default=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                        onupdate=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"))
 
     def __repr__(self):
         return (f"<User(id={self.id}, phone_number='{self.phone_number}', "
@@ -31,7 +33,8 @@ class Message(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(String, nullable=False)
     type = Column(String, nullable=False)
-    date = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    date = Column(DateTime, nullable=False,
+                  default=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"))
 
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
 
@@ -50,8 +53,9 @@ class Stock(Base):
     high_price = Column(Integer, nullable=False)
     low_price = Column(Integer, nullable=False)
     current_price = Column(Integer, nullable=False)
-    date = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc),
-                  onupdate=lambda: datetime.now(timezone.utc))
+    date = Column(DateTime, nullable=False,
+                  default=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                  onupdate=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"))
 
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
 
