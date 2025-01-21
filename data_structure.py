@@ -59,5 +59,4 @@ class Stock(Base):
         return (f"<Stock(id={self.id}, company_name='{self.company_name}', "
                 f"open_price='{self.open_price}', close_price={self.close_price}, "
                 f"high_price='{self.high_price}', low_price={self.low_price}, "
-                f"current_price='{self.current_price}', date={self.active}, "
                 f"current_price='{self.current_price}', date='{self.date}')>")
