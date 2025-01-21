@@ -1,11 +1,4 @@
-import requests
-from dotenv import load_dotenv
-import os
 from api_fetch import get_stock_data
-
-
-load_dotenv()
-api_key = os.getenv("API_KEY")
 
 
 def parse_stock_data(api_response):
@@ -22,11 +15,12 @@ def parse_stock_data(api_response):
             "Low Price": last_daily["low"],
             "Current Price": last_daily["last"],
         }
-    except (KeyError, IndexError) as e:
+    except (KeyError, IndexError, TypeError) as e:
         print(f"Error parsing response: {e}")
         return None
 
-symbol = "AAPL"
+# example code
+symbol = "NVIDIA"
 api_response = get_stock_data(symbol)
 if api_response:
     stock_data = parse_stock_data(api_response)
