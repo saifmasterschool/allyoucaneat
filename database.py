@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+import uuid_utils as uuid
 
 # Utility functions
 def save_json(data, file_path):
@@ -25,7 +26,7 @@ def user_functions(file_path, phone_number, action, key=None, value=None):
     users = load_json(file_path)
 
     if action == 'create' and phone_number not in users:
-        users[phone_number] = {"id": len(users) + 1, "created_at": now(), "updated_at": now()}
+        users[phone_number] = {"id": uuid.uuid4(), "created_at": now(), "updated_at": now()}
 
     elif action == 'update' and phone_number in users:
         users[phone_number][key] = value
