@@ -26,7 +26,7 @@ def user_functions(file_path, phone_number, action, key=None, value=None):
     users = load_json(file_path)
 
     if action == 'create' and phone_number not in users:
-        users[phone_number] = {"id": uuid.uuid4(), "created_at": now(), "updated_at": now()}
+        users[phone_number] = {"id": str(uuid.uuid4()), "created_at": now(), "updated_at": now()}
 
     elif action == 'update' and phone_number in users:
         users[phone_number][key] = value
@@ -94,10 +94,11 @@ def main():
     stocks_file = 'data/stocks.json'
     os.makedirs('data', exist_ok=True)
 
+    user_id = str(uuid.uuid4())
     # Sample data
     users_data = {
         "+491244347937": {
-            "id": 1,
+            "id":  user_id,
             "stock_of_interest": ["AAPL", "GOOGL"],
             "delivery_frequency": "on_demand",
             "delivery_time": "18:00",
@@ -109,7 +110,7 @@ def main():
     save_json(users_data, users_file)
 
     messages_data = {
-        1: [
+        user_id: [
             {"text": "Hi!", "type": "received", "date": "2025-01-14 23:54:43"},
             {"text": "Hey!", "type": "sent", "date": "2025-01-14 23:55:10"},
             {"text": "How are you?", "type": "received", "date": "2025-01-14 23:55:45"}
@@ -118,7 +119,7 @@ def main():
     save_json(messages_data, messages_file)
 
     stocks_data = {
-        1: [
+        user_id: [
             {
                 "Company Name": "Test Company",
                 "Open Price": 22,
