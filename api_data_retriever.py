@@ -1,31 +1,4 @@
-import requests
-from dotenv import load_dotenv
-import os
-
-
-load_dotenv()
-api_key = os.getenv("API_KEY")
-
-# Mark's code
-def get_stock_data(stock_id):
-    """Get stock profile data for a given stock ID."""
-    url = "https://seeking-alpha.p.rapidapi.com/symbols/get-profile"
-
-    querystring = {"symbols": stock_id}
-
-    headers = {
-        "x-rapidapi-key": api_key,
-        "x-rapidapi-host": "seeking-alpha.p.rapidapi.com"
-    }
-
-    response = requests.get(url, headers=headers, params=querystring)
-
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error: {response.status_code} - {response.text}")
-        return None
-#end Mark's code
+from api_fetch import get_stock_data
 
 
 def parse_stock_data(api_response):
@@ -46,8 +19,7 @@ def parse_stock_data(api_response):
         print(f"Error parsing response: {e}")
         return None
 
-
-# example code to test
+# example code
 symbol = "AAPL"
 api_response = get_stock_data(symbol)
 if api_response:
