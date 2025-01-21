@@ -25,7 +25,7 @@ def get_stock_data(stock_id):
     else:
         print(f"Error: {response.status_code} - {response.text}")
         return None
-
+#end Mark's code
 
 
 def parse_stock_data(api_response):
@@ -54,3 +54,4 @@ if api_response:
     stock_data = parse_stock_data(api_response)
     if stock_data:
         print(stock_data)
+# end example code
