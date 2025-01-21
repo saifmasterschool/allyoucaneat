@@ -1,0 +1,13 @@
+{
+    "1": [
+        {
+            "Company Name": "Test Company",
+            "Open Price": 22,
+            "Close Price": 33,
+            "High Price": 222,
+            "Low Price": 22,
+            "Current Price": 100,
+            "date": "2025-01-21 11:52:14"
+        }
+    ]
+}
