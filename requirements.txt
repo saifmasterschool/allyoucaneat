@@ -2,3 +2,4 @@ sqlalchemy
 python-dotenv
 requests
 uuid_utils
+yfinance

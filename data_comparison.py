@@ -1,7 +1,13 @@
+import warnings
+import logging
+import yfinance as yf
+
 from datetime import datetime
-from api_fetch import get_stock_data
-from api_data_retriever import parse_stock_data
+from datetime import timedelta
 from usermgmt import retrieve_sms
+
+
+logging.getLogger("yfinance").setLevel(logging.CRITICAL)
 
 
 def get_date_from_messages(api_url, user_id):
@@ -29,26 +35,41 @@ def get_date_from_messages(api_url, user_id):
         return None
 
 
-def compare_stock_values(stock_symbol, compare_date, api_url):
-    """Compare stock values from a specific date to today."""
-    today = datetime.now().strftime("%Y-%m-%d")
-    today_data = get_stock_data(stock_symbol)
-    today_stock = parse_stock_data(today_data)
-    compare_date_data = get_stock_data(stock_symbol)
-    compare_date_stock = parse_stock_data(compare_date_data)
-
-    if not today_stock:
-        print("Unable to fetch or parse today's stock data.")
-    if not compare_date_stock:
-        print("Unable to fetch or parse stock data for the comparison date.")
-
-    if not today_stock or not compare_date_stock:
-        print(f"Compare Date Data: {compare_date_data}")
-        print(f"Today Data: {today_data}")
+def get_stock_data_yf(stock_symbol, date):
+    stock = yf.Ticker(stock_symbol)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")  # Suppress warnings
+        for _ in range(5):  # Try up to 5 previous days
+            data = stock.history(start=date.strftime("%Y-%m-%d"),
+                                 end=(date + timedelta(days=1)).strftime("%Y-%m-%d"))
+            if not data.empty:
+                return {
+                    "Open Price": data.iloc[0]["Open"],
+                    "Close Price": data.iloc[0]["Close"],
+                    "High Price": data.iloc[0]["High"],
+                    "Low Price": data.iloc[0]["Low"],
+                }
+            date -= timedelta(days=1)  # Fallback to the previous day
+        print(f"No stock data available for {stock_symbol} after 5 attempts.")
         return None
 
-    today_close = today_stock.get("Close Price", 0)
-    compare_date_close = compare_date_stock.get("Close Price", 0)
+
+def compare_stock_values(stock_symbol, compare_date):
+    """Compare stock values from a specific date to today using yfinance."""
+    today = datetime.now()
+    today_data = get_stock_data_yf(stock_symbol, today)
+    compare_date_data = get_stock_data_yf(stock_symbol, compare_date)
+
+    if not today_data:
+        print("Unable to fetch stock data for today.")
+    if not compare_date_data:
+        print("Unable to fetch stock data for the comparison date.")
+
+    if not today_data or not compare_date_data:
+        return None
+
+    today_close = today_data.get("Close Price", 0)
+    compare_date_close = compare_date_data.get("Close Price", 0)
     difference = round(float(today_close) - float(compare_date_close), 2) \
         if today_close and compare_date_close else "N/A"
     percentage_difference = (
@@ -59,7 +80,7 @@ def compare_stock_values(stock_symbol, compare_date, api_url):
 
     comparison = {
         "Compare Date": compare_date.strftime("%Y-%m-%d"),
-        "Today": today,
+        "Today": today.strftime("%Y-%m-%d"),
         "Compare Date Close": compare_date_close,
         "Today Close": today_close,
         "Difference": difference,
@@ -71,14 +92,15 @@ def compare_stock_values(stock_symbol, compare_date, api_url):
 
 if __name__ == "__main__":
 
+#test
     API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/allyoucaneat'
-    stock_symbol = "BTC"
+    stock_symbol = "MSFT"
 
     user_id = "4917640448079"
     compare_date = get_date_from_messages(API_URL_retrieve_sms, user_id)
 
     if compare_date:
-        result = compare_stock_values(stock_symbol, compare_date, API_URL_retrieve_sms)
+        result = compare_stock_values(stock_symbol, compare_date)
 
         if result:
             print("Stock Comparison:")
