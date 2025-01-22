@@ -31,7 +31,7 @@ def register_numbers(api_url, ph_num):
 
 def send_sms(api_url):
     payload = {
-  "phoneNumber": 4915566132158,
+  "phoneNumber": <ph number>,
   "message": 'Welcome to Allyoucaneat APP!'
     }
 
