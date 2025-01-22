@@ -15,9 +15,10 @@ def parse_stock_data(api_response):
             "Low Price": last_daily["low"],
             "Current Price": last_daily["last"],
         }
-    except (KeyError, IndexError) as e:
+    except (KeyError, IndexError, TypeError) as e:
         print(f"Error parsing response: {e}")
         return None
+
 
 def main():# example code
     symbol = "AAPL"
@@ -29,3 +30,4 @@ def main():# example code
 
 if __name__ == "__main__":
     main()
+
