@@ -19,11 +19,13 @@ class User(Base):
     updated_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc),
                         onupdate=lambda: datetime.now(timezone.utc))
 
+
     def __repr__(self):
         return (f"<User(id={self.id}, phone_number='{self.phone_number}', "
-                f"stock_of_interest={self.stock_of_interest}, delivery_frequency='{self.delivery_frequency}', "
-                f"delivery_time='{self.delivery_time}', active={self.active}, "
-                f"created_at='{self.created_at}', updated_at='{self.updated_at}')>")
+                f"stock_of_interest={self.stock_of_interest}, num_received_messages={self.num_received_messages}, "
+                f"delivery_frequency='{self.delivery_frequency}', delivery_time='{self.delivery_time}', "
+                f"active={self.active}, created_at='{self.created_at}', updated_at='{self.updated_at}')>")
+
 
 class Message(Base):
     __tablename__ = 'messages'

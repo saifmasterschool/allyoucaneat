@@ -25,6 +25,7 @@ def register_number(api_url, ph_num):
 
     if response.status_code == 200:
         print(f'Phone number {ph_num} was registered successfully')
+        send_sms(api_url, ph_num, 'Welcome to Wolves of Wall Street APP!')
         #return response.json()
     else:
         print('Phone number registration failed failed')
@@ -40,16 +41,17 @@ def unregister_number(api_url, ph_num):
 
     if response.status_code == 200:
         print(f'Phone number {ph_num} was unregistered successfully')
+        send_sms(api_url, ph_num,f'Phone number {ph_num} was unregistered successfully')
         #return response.json()
     else:
         print('Phone number registration failed failed')
         print('Response:', response.text)
 
 
-def send_sms(api_url, ph_num):
+def send_sms(api_url, ph_num, message):
     payload = {
   "phoneNumber": int(ph_num[1:]),
-  "message": 'Welcome to Wolves of Wall Street APP!'
+  "message": message
     }
 
     response = requests.post(api_url, json = payload)
