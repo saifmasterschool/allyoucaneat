@@ -6,6 +6,17 @@ After registering to the service, the user can request the stock information by 
 
 The program then connects to the Seeking Alpha API for the current data.
 
+Afterwards the user receives a SMS with the following info:
+- Company Name
+- Market Open Price
+- Market Closing Price
+- High Price
+- Low Price
+- Current Price
+
+
+(This project was developed as part of a Masterschool Hackathon)
+
 
 
 
