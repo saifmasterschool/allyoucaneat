@@ -1,16 +1,16 @@
 import os
 import time
-from pyexpat.errors import messages
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from usermgmt import retrieve_sms, send_sms, unregister_number
 from db_setup import initialize, create_database, new_user, update_user, print_all_users
 from data_structure import Base, User, Message, Stock
 from api_data_retriever import *
+from data_comparison import *
 
 # Constants
-api_url_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/WolvesofWallStreet'
+api_url_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/wows'
 api_url_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
 database_path = os.path.abspath(os.path.join(os.getcwd(), "data", "WoW.sqlite"))
 
@@ -21,24 +21,61 @@ initialize(database_path)
 engine = create_engine(f"sqlite:///{database_path}")
 Session = sessionmaker(bind=engine)
 
-def send_option(api_url_send_sms, ph_num, text):
-
+def send_option(ph_num, text):
+    print(ph_num)
     if text.lower().strip() == "unsubscribe":
         unregister_number(ph_num)
         message = "Sucessfully unsubscribed"
-        send_sms(api_url_send_sms,ph_num, message)
-    elif text.lower().strip() == "stock":
-        symbol = "AAPL"
-        api_response = get_stock_data(symbol)
-        if api_response:
-            stock_data = parse_stock_data(api_response)
-        message = f"Your Stock 'APPL' has a current value of  ${stock_data['Current Price']}"
-        print(message)
-        send_sms(api_url_send_sms,ph_num, message)
-    else:
-        message = "1.Enter 'STOCK': To get Stock info or Enter 'SUBSCRIBE': To cancel subscription"
-        send_sms(api_url_send_sms,ph_num, message)
+        send_sms(ph_num, message)
 
+    elif text.split()[0].lower().strip() == "stock":
+
+        if len(text.split()) == 2:
+            symbol = text.split()[1].upper().strip()
+            symbol = 'AAPL'
+            api_response = get_stock_data(symbol)
+
+            if api_response:
+                stock_data = parse_stock_data(api_response)
+                message = (f"Your Stock {symbol} is currently valued at ${stock_data['Current Price']}! Keep tracking your investments like a pro.")
+
+                print(ph_num, message)
+
+            else:
+                message = f"No stock data found for {symbol}"
+
+        else:
+            message = f"Please Enter also a stockname in the following form ('STOCK' 'Stock-Ticker-Symbol')"
+
+        send_sms(ph_num, message)
+
+
+    elif text.split()[0].lower().strip() == "compare":
+        if len(text.split()) == 3:
+            stock_symbol = text.split()[1].upper()
+            days = int(text.split()[2])
+            compare_date =  datetime.now() - timedelta(days=days)
+            result = compare_stock_values(stock_symbol, compare_date)
+            message = (
+                f"{stock_symbol} Stock Update!\n"
+                    f"Current Value: ${result['Today Close']}\n"
+                    f"Compared to {days} days ago: {result['Percentage Difference']}\n"
+                    f"Stay ahead of the curve and make informed decisions."
+                       )
+            send_sms(ph_num, message)
+
+    else:
+        time.sleep(2)
+        message = (
+            "Welcome to the Wolf-Menu!\n Commands:\n"
+            "STOCK <Stock-symbol>: Latest info.\n"
+            "COMPARE <Stock-symbol> <DAYS>:\n Compare to days ago.\n"
+            "UNSUBSCRIBE"
+        )
+        print(ph_num,message)
+        send_sms(ph_num, message)
+
+    #send_sms(ph_num, message)
 
 
 def update_received_messages(self, new_message_count, session):
@@ -60,7 +97,7 @@ def main():
     while True:
         try:
             # Retrieve SMS messages from the API
-            user_messages = retrieve_sms(api_url_retrieve_sms)
+            user_messages = retrieve_sms()
 
 
             for phone_number, messages in user_messages.items():
@@ -81,8 +118,8 @@ def main():
 
                 if update_received_messages(user, current_message_count, session):
                     print('New message received!"')
-                    time.sleep(2)
-                    send_option(api_url_send_sms, '+' + user.phone_number, messages[-1]['text'])
+                    time.sleep(1)
+                    send_option(user.phone_number, messages[-1]['text'])
 
                 else:
                     print('No new message received!"')

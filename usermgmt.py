@@ -1,11 +1,15 @@
+import sys
 import requests
 
 
-def create_team(api_url, team_name):
+
+def create_team(team_name):
+
+    api_url_create_team = 'http://hackathons.masterschool.com:3030/team/addNewTeam'
 
     payload = {'teamName' : team_name}
 
-    response = requests.post(api_url , json = payload)
+    response = requests.post(api_url_create_team , json = payload)
 
     if response.status_code == 200:
         print(f'Team: {team_name} created successfully!')
@@ -15,57 +19,67 @@ def create_team(api_url, team_name):
         print('Response:', response.text)
 
 
-def register_number(api_url, ph_num):
+def register_number( ph_num):
+
+    api_url_register_num = 'http://hackathons.masterschool.com:3030/team/registerNumber'
+
     payload = {
-  "phoneNumber": int(ph_num[1:]),
-  "teamName": "WolvesofWallStreet"
+  "phoneNumber": ph_num,
+  "teamName": "wows"
 }
 
-    response = requests.post(api_url , json = payload)
+    response = requests.post(api_url_register_num , json = payload)
 
     if response.status_code == 200:
         print(f'Phone number {ph_num} was registered successfully')
-        send_sms(api_url, ph_num, 'Welcome to Wolves of Wall Street APP!')
+        api_url_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
+        send_sms(api_url_send_sms, ph_num, 'Welcome to Wolves of Wall Street APP!')
         #return response.json()
     else:
         print('Phone number registration failed failed')
         print('Response:', response.text)
 
-def unregister_number(api_url, ph_num):
+def unregister_number(ph_num):
+    api_url_unregister_num = 'http://hackathons.masterschool.com:3030/team/unregisterNumber'
     payload = {
   "phoneNumber": ph_num,
-  "teamName": "WolvesofWallStreet"
+  "teamName": "wows"
 }
 
-    response = requests.post(api_url , json = payload)
+    response = requests.post(api_url_unregister_num , json = payload)
 
     if response.status_code == 200:
         print(f'Phone number {ph_num} was unregistered successfully')
-        send_sms(api_url, ph_num,f'Phone number {ph_num} was unregistered successfully')
-        #return response.json()
+        send_sms(ph_num,f'Phone number {ph_num} was unregistered successfully')
+
     else:
         print('Phone number registration failed failed')
         print('Response:', response.text)
 
 
-def send_sms(api_url, ph_num, message):
-    payload = {
-  "phoneNumber": int(ph_num[1:]),
-  "message": message
-    }
+def send_sms(ph_num, message):
 
-    response = requests.post(api_url, json = payload)
+    api_url_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
+
+    payload = {
+  "phoneNumber": ph_num,
+  "message": message,
+
+}
+
+    response = requests.post(api_url_send_sms, json = payload)
 
     if response.status_code == 200:
-        print(f'Your message sent successfully')
+        print(f'Your message "{message}" sent successfully')
         #return response.json()
     else:
         print('Message not delivered')
         print('Response:', response.text)
 
 
-def retrieve_sms(API_URL_retrieve_sms):
-    response = requests.get(API_URL_retrieve_sms)
+def retrieve_sms():
+    api_url_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/wows'
+    response = requests.get(api_url_retrieve_sms)
 
     if response.status_code == 200:
         messages = response.json()
@@ -75,32 +89,35 @@ def retrieve_sms(API_URL_retrieve_sms):
         print(f'Error: {response.status_code}')
 
 
-def check_sms():
-    message = retrieve_sms(API_URL_retrieve_sms)
-
-    if 'WolvesofWallStreet' in message:
-        return "REGISTER"
-    else:
-        return "STOCK"
-
+def print_menu():
+    print("\n0. Exit"
+          "\n1. Register User"
+          "\n2. Unregister User"
+          "\n3. send_message",
+          "\n4. List_registered_users\n")
+4
+def menu_logic(user_input):
+    if user_input == '0':
+        sys.exit()
+    if user_input == '1':
+        ph_num = input('Please enter your German number without space and + sign')
+        register_number(ph_num)
+    if user_input == '2':
+        ph_num = input('Please enter your Phone number without space and + sign')
+        unregister_number(ph_num)
+    if user_input == '3':
+        ph_num = input('Please enter your Phone number without space and + sign')
+        message = input('Please enter your message')
+        send_sms(ph_num, message)
+    if user_input == '4':
+        messages = retrieve_sms()
+        for key in messages.keys():
+            print(key)
 
 if __name__ == "__main__":
-
-    API_URL_create_team = 'http://hackathons.masterschool.com:3030/team/addNewTeam'
-    API_URL_register_num = 'http://hackathons.masterschool.com:3030/team/registerNumber'
-    API_URL_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
-    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/WolvesofWallStreet'
-    TeamName = 'WolvesofWallStreet'
-
-    #create_team(API_URL_create_team, TeamName)
-
-    ph_num = input('Please enter your German number without space and + sign')
+    while True:
+        print_menu()
+        user_input = input("Please enter option: ")
+        menu_logic(user_input)
 
 
-
-    register_number(API_URL_register_num, ph_num)
-
-    send_sms(API_URL_send_sms, ph_num)
-
-    messages = retrieve_sms(API_URL_retrieve_sms)
-    print(messages)

@@ -93,12 +93,12 @@ def compare_stock_values(stock_symbol, compare_date):
 if __name__ == "__main__":
 
 #test
-    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/allyoucaneat'
-    stock_symbol = "MSFT"
+    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/wolvesofwallstreet'
+    stock_symbol = "AAPL"
 
     user_id = "4917640448079"
-    compare_date = get_date_from_messages(API_URL_retrieve_sms, user_id)
 
+    compare_date =  datetime.now() - timedelta(days=7)
     if compare_date:
         result = compare_stock_values(stock_symbol, compare_date)
 
