@@ -10,7 +10,9 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     phone_number = Column(String, nullable=False, unique=True)
-    stock_of_interest = Column(JSON, nullable=False, default=[])
+    stock_of_interest = Column(String, nullable=False, unique=True)
+    num_received_messages = Column(Integer, nullable=False)
+    num_sent_messages = Column(Integer, nullable=False)
     delivery_frequency = Column(String, nullable=False, default='on_demand')
     delivery_time = Column(String, nullable=False, default='18:00')
     active = Column(Boolean, nullable=False, default=True)
@@ -48,10 +50,6 @@ class Stock(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     company_name = Column(String, nullable=False)
-    open_price = Column(Integer, nullable=False)
-    close_price = Column(Integer, nullable=False)
-    high_price = Column(Integer, nullable=False)
-    low_price = Column(Integer, nullable=False)
     current_price = Column(Integer, nullable=False)
     date = Column(DateTime, nullable=False,
                   default=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
@@ -61,6 +59,4 @@ class Stock(Base):
 
     def __repr__(self):
         return (f"<Stock(id={self.id}, company_name='{self.company_name}', "
-                f"open_price='{self.open_price}', close_price={self.close_price}, "
-                f"high_price='{self.high_price}', low_price={self.low_price}, "
                 f"current_price='{self.current_price}', date='{self.date}')>")

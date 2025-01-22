@@ -1,34 +1,52 @@
+import time
 from usermgmt import *
 from api_data_retriever import parse_stock_data
 from api_fetch import  *
-from data_structure import *
+#from data_structure import *
 from db_setup import*
+
+
 
 def now():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-def new_user(ph_num):
-    new_user = User(
-        phone_number= ph_num,
-        stock_of_interest=["AAPL"],
-        delivery_frequency= "on_demand",
-        delivery_time=None,
-        active=True,
-        created_at= now(),
-        updated_at=now(),
-    )
-    return new_user
-
-
-
-
 def main():
-    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/WolvesofWallStreet'
+    # Database path
+    database_path = "/data/WoW.sqlite"
 
+    # Initialize the database and create a session
+    Session = initialize(database_path)
+    session = Session()
     while True:
-        user_messages = retrieve_sms(API_URL_retrieve_sms)
-        for key, val in user_messages.items():
-            len(messages)
+        try:
+            # Fetch the data directly
+            user_messages = retrieve_sms(api_url_retrieve_sms)
+
+            for phone_number, messages in user_messages.items():
+                print(f"Phone number {phone_number} has {len(messages)} messages.")
+
+                # Check if the user exists in the database
+                user = session.query(User).filter_by(phone_number=phone_number).first()
+
+                if user:
+                    # Update the user's received message count
+                    update_user(
+                        session,
+                        ph_num=phone_number,
+                        num_received_messages=user.num_received_messages + len(messages)
+                    )
+                else:
+                    # If user doesn't exist, create a new user
+                    print(f"Phone number {phone_number} not found. Creating new user.")
+                    new_user(session, phone_number)
+
+            # Sleep for 5 seconds before fetching again
+            time.sleep(5)
+
+        except Exception as e:
+            print(f"Error processing user messages: {e}")
+            break
+
 
     user_messages = retrieve_sms(API_URL_retrieve_sms)
 
