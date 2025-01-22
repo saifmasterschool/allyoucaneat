@@ -172,3 +172,4 @@ cython_debug/
 data/
 .idea/
 .env
+.DS_Store/
