@@ -1,8 +1,9 @@
 import requests
 
-def create_team(api_url, team_name):
-    payload = {'teamName' : team_name}
 
+def create_team(api_url, team_name):
+
+    payload = {'teamName' : team_name}
 
     response = requests.post(api_url , json = payload)
 
@@ -14,10 +15,10 @@ def create_team(api_url, team_name):
         print('Response:', response.text)
 
 
-def register_numbers(api_url, ph_num):
+def register_number(api_url, ph_num):
     payload = {
-  "phoneNumber": ph_num,
-  "teamName": "allyoucaneat"
+  "phoneNumber": int(ph_num[1:]),
+  "teamName": "WolvesofWallStreet"
 }
 
     response = requests.post(api_url , json = payload)
@@ -29,10 +30,26 @@ def register_numbers(api_url, ph_num):
         print('Phone number registration failed failed')
         print('Response:', response.text)
 
-def send_sms(api_url):
+def unregister_number(api_url, ph_num):
     payload = {
-  "phoneNumber": 4915566132158,
-  "message": 'Welcome to Allyoucaneat APP!'
+  "phoneNumber": ph_num,
+  "teamName": "WolvesofWallStreet"
+}
+
+    response = requests.post(api_url , json = payload)
+
+    if response.status_code == 200:
+        print(f'Phone number {ph_num} was unregistered successfully')
+        #return response.json()
+    else:
+        print('Phone number registration failed failed')
+        print('Response:', response.text)
+
+
+def send_sms(api_url, ph_num):
+    payload = {
+  "phoneNumber": int(ph_num[1:]),
+  "message": 'Welcome to Wolves of Wall Street APP!'
     }
 
     response = requests.post(api_url, json = payload)
@@ -45,7 +62,7 @@ def send_sms(api_url):
         print('Response:', response.text)
 
 
-def retrieve_sms(api_url):
+def retrieve_sms(API_URL_retrieve_sms):
     response = requests.get(API_URL_retrieve_sms)
 
     if response.status_code == 200:
@@ -59,7 +76,7 @@ def retrieve_sms(api_url):
 def check_sms():
     message = retrieve_sms(API_URL_retrieve_sms)
 
-    if 'allyoucaneat' in message:
+    if 'WolvesofWallStreet' in message:
         return "REGISTER"
     else:
         return "STOCK"
@@ -70,21 +87,18 @@ if __name__ == "__main__":
     API_URL_create_team = 'http://hackathons.masterschool.com:3030/team/addNewTeam'
     API_URL_register_num = 'http://hackathons.masterschool.com:3030/team/registerNumber'
     API_URL_send_sms = 'http://hackathons.masterschool.com:3030/sms/send'
-    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/allyoucaneat'
-    TeamName = 'allyoucaneat'
+    API_URL_retrieve_sms = 'http://hackathons.masterschool.com:3030/team/getMessages/WolvesofWallStreet'
+    TeamName = 'WolvesofWallStreet'
 
-    #create_team(API_URL_create_team,TeamName)
+    #create_team(API_URL_create_team, TeamName)
 
-    phone_num = input('Please enter your German number without space and + sign')
+    ph_num = input('Please enter your German number without space and + sign')
 
-    register_numbers(API_URL_register_num, phone_num)
 
-    send_sms(API_URL_send_sms)
+
+    register_number(API_URL_register_num, ph_num)
+
+    send_sms(API_URL_send_sms, ph_num)
 
     messages = retrieve_sms(API_URL_retrieve_sms)
-    for user_id, message_list in messages.items():
-        print(f"\nMessages for User ID {user_id}:")
-        for msg in message_list:
-            text = msg.get("text", "No text")
-            received_at = msg.get("receivedAt", "Unknown time")
-            print(f"  - {text} (Received at: {received_at})")
+    print(messages)

@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from data_structure import  Base, User, Message, Stock
+import uuid_utils as uuid
 
 # Create a database connection
 engine = create_engine('sqlite:///data/WoW.sqlite')
