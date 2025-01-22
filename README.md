@@ -1,11 +1,11 @@
 
 # SMS - Stock Market Service
 
-Welcome to our SMS project, that gives people the possibility to check there Stocks without internet access.
-After registering to the service, the user can request the stock information by sending "Stock {stock symbol}".
+Welcome to our SMS project, that gives people the possibility to check there Stocks without internet access.<br><br>
+After registering to the service, the user can request the stock information by sending "Stock {stock symbol}".<br>
+For example if the Apple Stock data is wanted: "Stock AAPL".
 
-The program then connects to the Seeking Alpha API for the current data.
-
+The program then connects to the Seeking Alpha API for the current data.<br>
 Afterwards the user receives a SMS with the following info:
 - Company Name
 - Market Open Price
@@ -16,8 +16,6 @@ Afterwards the user receives a SMS with the following info:
 
 
 (This project was developed as part of a Masterschool Hackathon)
-
-
 
 
 
