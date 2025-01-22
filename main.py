@@ -26,18 +26,18 @@ def send_option(ph_num, text):
     if text.lower().strip() == "unsubscribe":
         unregister_number(ph_num)
         message = "Sucessfully unsubscribed"
-        send_sms(ph_num, message)
+
 
     elif text.split()[0].lower().strip() == "stock":
 
         if len(text.split()) == 2:
             symbol = text.split()[1].upper().strip()
-            symbol = 'AAPL'
+
             api_response = get_stock_data(symbol)
 
             if api_response:
                 stock_data = parse_stock_data(api_response)
-                message = (f"Your Stock {symbol} is currently valued at ${stock_data['Current Price']}! Keep tracking your investments like a pro.")
+                message = (f"{symbol} is currently valued at ${stock_data['Current Price']}")
 
                 print(ph_num, message)
 
@@ -47,7 +47,6 @@ def send_option(ph_num, text):
         else:
             message = f"Please Enter also a stockname in the following form ('STOCK' 'Stock-Ticker-Symbol')"
 
-        send_sms(ph_num, message)
 
 
     elif text.split()[0].lower().strip() == "compare":
@@ -58,11 +57,14 @@ def send_option(ph_num, text):
             result = compare_stock_values(stock_symbol, compare_date)
             message = (
                 f"{stock_symbol} Stock Update!\n"
-                    f"Current Value: ${result['Today Close']}\n"
+                    f"Current Value: ${round(result['Today Close'],2)}\n"
                     f"Compared to {days} days ago: {result['Percentage Difference']}\n"
-                    f"Stay ahead of the curve and make informed decisions."
                        )
             send_sms(ph_num, message)
+
+        else:
+            message = f"Please Enter also a stockname in the following form (COMPARE 'STOCK' 'Days')"
+
 
     else:
         time.sleep(2)
@@ -73,9 +75,9 @@ def send_option(ph_num, text):
             "UNSUBSCRIBE"
         )
         print(ph_num,message)
-        send_sms(ph_num, message)
 
-    #send_sms(ph_num, message)
+
+    send_sms(ph_num, message)
 
 
 def update_received_messages(self, new_message_count, session):
