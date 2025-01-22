@@ -46,7 +46,6 @@ def send_sms(api_url):
 
 
 def retrieve_sms(api_url):
-
     response = requests.get(API_URL_retrieve_sms)
 
     if response.status_code == 200:
@@ -55,6 +54,15 @@ def retrieve_sms(api_url):
 
     else:
         print(f'Error: {response.status_code}')
+
+
+def check_sms():
+    message = retrieve_sms(API_URL_retrieve_sms)
+
+    if 'allyoucaneat' in message:
+        return "REGISTER"
+    else:
+        return "STOCK"
 
 
 if __name__ == "__main__":
