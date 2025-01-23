@@ -1,8 +1,8 @@
-# SMS - Stock Alert Service
+# SMS - Stock Market Service
 
 ## Overview
 
-The **SMS - Stock Alert Service** is a simple and fast solution for receiving real-time stock price updates via SMS. Designed to work on any mobile phone, including non-smartphones, it addresses key challenges such as:
+The **SMS - Stock MarketService** is a simple and fast solution for receiving real-time stock price updates via SMS. Designed to work on any mobile phone, including non-smartphones, it addresses key challenges such as:
 
 - Limited internet access.
 - Dependence on smartphones and data-heavy apps.
@@ -31,7 +31,7 @@ This service ensures accessibility and convenience for users who need quick stoc
 
 ---
 
-## Why Use SMS - Stock Alert Service?
+## Why Use SMS - Stock Market Service?
 
 - **Retail Investors:** Get quick updates without dealing with app clutter.
 - **Traders in Remote Areas:** Access stock updates even with limited or no internet.
@@ -88,4 +88,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Experience the simplicity and reliability of stock updates with **SMS - Stock Alert Service**!
+Experience the simplicity and reliability of stock updates with **SMS - Stock Market Service**!
