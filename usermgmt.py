@@ -54,7 +54,7 @@ def send_sms(ph_num, message):
     payload = {
         "phoneNumber": int(ph_num),
         "message": message,
-        "sender": "wowse"
+
     }
 
     response = requests.post(api_url_send_sms, json=payload)
@@ -62,6 +62,7 @@ def send_sms(ph_num, message):
     if response.status_code == 200:
         print(f'Your message "{message}" sent successfully')
     else:
+
         print('Message not delivered')
         print('Response:', response.text)
 

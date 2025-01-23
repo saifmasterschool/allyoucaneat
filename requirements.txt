@@ -1,5 +1,5 @@
-sqlalchemy
-python-dotenv
-requests
-uuid_utils
-yfinance
+SQLAlchemy==2.0.37
+python-dotenv==1.0.1
+requests==2.32.3
+yfinanceyfinance==0.2.52
+

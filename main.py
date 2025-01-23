@@ -22,6 +22,7 @@ engine = create_engine(f"sqlite:///{database_path}")
 Session = sessionmaker(bind=engine)
 
 def send_option(ph_num, text):
+    """ sensing option for app dependent on user input"""
     print(ph_num)
     if text.lower().strip() == "unsubscribe":
         unregister_number(ph_num)
@@ -31,23 +32,25 @@ def send_option(ph_num, text):
     elif text.split()[0].lower().strip() == "stock":
 
         if len(text.split()) == 2:
-            symbol = text.split()[1].upper().strip()
+            stock_symbol = text.split()[1].upper().strip()
+            try:
+                api_response = get_stock_data(stock_symbol)
 
-            api_response = get_stock_data(symbol)
+                if api_response:
+                    stock_data = parse_stock_data(api_response)
+                    message = (f"{stock_symbol} Stock Update!\n"
+                        f"Current Value: ${stock_data['Current Price']}")
 
-            if api_response:
-                stock_data = parse_stock_data(api_response)
-                message = (f"{symbol} is currently valued at ${stock_data['Current Price']}")
+                    print(ph_num, message)
+                else:
+                    message = f"No stock data found for {stock_symbol}"
 
-                print(ph_num, message)
-
-            else:
-                message = f"No stock data found for {symbol}"
+            except Exception as e:
+                print(e)
+                message = f"No stock data found for {stock_symbol}"
 
         else:
             message = f"Please Enter also a stockname in the following form ('STOCK' 'Stock-Ticker-Symbol')"
-
-
 
     elif text.split()[0].lower().strip() == "compare":
         if len(text.split()) == 3:
@@ -60,11 +63,9 @@ def send_option(ph_num, text):
                     f"Current Value: ${round(result['Today Close'],2)}\n"
                     f"Compared to {days} days ago: {result['Percentage Difference']}\n"
                        )
-            send_sms(ph_num, message)
 
         else:
             message = f"Please Enter also a stockname in the following form (COMPARE 'STOCK' 'Days')"
-
 
     else:
         time.sleep(2)
@@ -75,7 +76,6 @@ def send_option(ph_num, text):
             "UNSUBSCRIBE"
         )
         print(ph_num,message)
-
 
     send_sms(ph_num, message)
 
@@ -93,6 +93,7 @@ def update_received_messages(self, new_message_count, session):
     return False
 
 def main():
+    """" Event loop constantly checking for new user messages based on database entries"""
     # Create a new session instance
     session = Session()
 
