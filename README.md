@@ -68,6 +68,7 @@ Developed by:
 - [@kaiser-data](https://github.com/kaiser-data)
 - [@Marinaropc](https://github.com/Marinaropc)
 - [@Suma-H](https://github.com/Suma-H)
+- [@rpuri19](https://github.com/rpuri19)
 - [@samypt](https://github.com/samypt)
 - [@SenorGunter](https://github.com/SenorGunter)
 
