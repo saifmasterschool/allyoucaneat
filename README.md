@@ -1,37 +1,48 @@
-# SMS - Stock Market Service
+# SMS Stock Market Service by Team Wolves of Wallstreet
 
-Welcome to our SMS project, that gives people the possibility to check there Stocks without internet access.<br><br>
-After registering to the service, the user can request the stock information by sending "Stock {stock symbol}".<br>
-For example if the Apple Stock data is wanted: "Stock AAPL".
+This SMS service allows users to check stock information without internet access. After registering, users can request stock data by texting "Stock {stock symbol}" to a designated phone number. For example, to get Apple stock data, text "Stock AAPL".
 
-The program then connects to the Seeking Alpha API for the current data. and uses yahoo finane for historical data<br>
+The service retrieves current stock data from the Seeking Alpha API and historical data from Yahoo Finance.
 
-User get menu list by writing any text with following Options to choose:
+**Features:**
 
-STOCK <STOCK Symbol> for STock info
-COMPARE <COMPARE SYMBOL> <DAYS> STock value compared to last days
-UNSUBSCRIBE 
+* Check stock information via SMS
+* Compare stock value to previous days' values
 
+**How it Works:**
 
-(This project was developed as part of a Masterschool Hackathon)
+1. Users register for the service.
+2. Users text "Stock {stock symbol}" to the service number.
+3. The service retrieves and sends back the requested stock information.
+4. Optionally, users can text "COMPARE <COMPARE SYMBOL> <DAYS>" to compare the stock value to the previous days' values.
 
+**Text Commands:**
 
-## REQUIREMENTS
-Python 3.12.3 
-SQLAlchemy==2.0.37
-python-dotenv==1.0.1
-requests==2.32.3
-yfinanceyfinance==0.2.52
+* `Stock {stock symbol}`: Get information about a specific stock.
+* `COMPARE <COMPARE SYMBOL> <DAYS>`: Compare a stock's value to the previous days' values. (e.g., "COMPARE AAPL 7")
+* `UNSUBSCRIBE`: Unsubscribe from the service.
 
+**(1st Place Winner - Masterschool Hackathon)**
 
-to Initialize Database Run db-setup.py
-to manage users run usermgmt.py
-to start service constantly checking answers and responding run main.py
+## Requirements
 
-## Authors
+* Python 3.12.3
+* SQLAlchemy==2.0.37
+* python-dotenv==1.0.1
+* requests==2.32.3
+* yfinance==0.2.52
 
-- [@kaiser-data](https://github.com/kaiser-data)
-- [@Marinaropc](https://github.com/Marinaropc)
-- [@Suma-H](https://github.com/Suma-H)
-- [@samypt](https://github.com/samypt)
-- [@SenorGunter](https://github.com/SenorGunter)
+## Setup
+
+1. Initialize the database: Run `db-setup.py`.
+2. Manage users: Run `usermgmt.py`.
+3. Start the service: Run `main.py` to continuously check for incoming texts and respond.
+
+## TEAM
+
+* [@kaiser-data](https://github.com/kaiser-data)
+* [@Marinaropc](https://github.com/Marinaropc)
+* [@Suma-H](https://github.com/Suma-H)
+* [@samypt](https://github.com/samypt)
+* [@SenorGunter](https://github.com/SenorGunter)
+
