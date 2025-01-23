@@ -54,7 +54,7 @@ def send_sms(ph_num, message):
     payload = {
         "phoneNumber": int(ph_num),
         "message": message,
-        "sender": "wowse"
+        "sender": "wows"
     }
 
     response = requests.post(api_url_send_sms, json=payload)
