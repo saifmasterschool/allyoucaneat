@@ -42,7 +42,7 @@ This service ensures accessibility and convenience for users who need quick stoc
 
 ## How It Works
 
-1. **Register:** Sign up for the service.
+1. **Register:** Sign up for the service. (At the moment no permanent service!)
 2. **Send SMS Commands:** For example, text `Stock AAPL` for Apple stock updates.
 3. **Receive Updates:** Get instant stock details via SMS.
 4. **Compare Values:** Use commands like `COMPARE AAPL 7` to analyze historical trends.
