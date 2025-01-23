@@ -26,7 +26,7 @@ def register_number(ph_num):
 
     if response.status_code == 200:
         print(f'Phone number {ph_num} was registered successfully')
-        send_sms(ph_num, 'Welcome to Wolves of Wall Street APP!')
+        send_sms(ph_num, 'Welcome to Wolves of Wall Street APP!\n Answer to this number to get options')
     else:
         print('Phone number registration failed')
         print('Response:', response.text)
