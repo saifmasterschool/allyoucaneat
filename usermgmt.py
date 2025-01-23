@@ -107,7 +107,7 @@ def menu_logic(user_input):
         messages = retrieve_sms()
         if messages:
             for key, value in messages.items():
-                print(f'{key}')
+                print(f'{key}{value}\n')
 
 
 if __name__ == "__main__":

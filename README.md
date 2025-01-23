@@ -24,6 +24,10 @@ requests==2.32.3
 yfinanceyfinance==0.2.52
 
 
+to Initialize Database Run db-setup.py
+to manage users run usermgmt.py
+to start service constantly checking answers and responding run main.py
+
 ## Authors
 
 - [@kaiser-data](https://github.com/kaiser-data)
