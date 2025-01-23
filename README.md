@@ -1,48 +1,109 @@
-# SMS Stock Market Service by Team Wolves of Wallstreet
+# SMS - Stock Alert Service
 
-This SMS service allows users to check stock information without internet access. After registering, users can request stock data by texting "Stock {stock symbol}" to a designated phone number. For example, to get Apple stock data, text "Stock AAPL".
+## Overview
 
-The service retrieves current stock data from the Seeking Alpha API and historical data from Yahoo Finance.
+The **SMS - Stock Alert Service** is a simple and fast solution for receiving real-time stock price updates via SMS. Designed to work on any mobile phone, including non-smartphones, it addresses key challenges such as:
 
-**Features:**
+- Limited internet access.
+- Dependence on smartphones and data-heavy apps.
+- The clutter of overwhelming notifications.
 
-* Check stock information via SMS
-* Compare stock value to previous days' values
+This service ensures accessibility and convenience for users who need quick stock updates without relying on constant internet connectivity.
 
-**How it Works:**
+---
+<img src="logo.png" alt="App Logo" width="150" />
 
-1. Users register for the service.
-2. Users text "Stock {stock symbol}" to the service number.
-3. The service retrieves and sends back the requested stock information.
-4. Optionally, users can text "COMPARE <COMPARE SYMBOL> <DAYS>" to compare the stock value to the previous days' values.
+## Key Features
 
-**Text Commands:**
+- **Real-Time Updates:** Instant stock price details delivered via SMS.
+- **Historical Comparison:** Compare stock prices with historical data.
+- **Simple Commands:** Easy-to-use commands for stock updates.
+- **Custom Alerts (Coming Soon):** Notifications for percentage changes and saved search histories.
 
-* `Stock {stock symbol}`: Get information about a specific stock.
-* `COMPARE <COMPARE SYMBOL> <DAYS>`: Compare a stock's value to the previous days' values. (e.g., "COMPARE AAPL 7")
-* `UNSUBSCRIBE`: Unsubscribe from the service.
+---
 
-**(1st Place Winner - Masterschool Hackathon)**
+## Example Commands
 
-## Requirements
+- `Stock AAPL`: Receive Apple’s stock details.
+- `COMPARE AAPL 7`: Compare Apple’s stock price to its value over the past 7 days.
+- `UNSUBSCRIBE`: Stop receiving updates.
 
-* Python 3.12.3
-* SQLAlchemy==2.0.37
-* python-dotenv==1.0.1
-* requests==2.32.3
-* yfinance==0.2.52
+---
 
-## Setup
+## Why Use SMS - Stock Alert Service?
 
-1. Initialize the database: Run `db-setup.py`.
-2. Manage users: Run `usermgmt.py`.
-3. Start the service: Run `main.py` to continuously check for incoming texts and respond.
+- **Retail Investors:** Get quick updates without dealing with app clutter.
+- **Traders in Remote Areas:** Access stock updates even with limited or no internet.
+- **Non-Smartphone Users:** Works on feature phones for ultimate accessibility.
+- **Busy Professionals:** Instant notifications without the need for apps.
 
-## TEAM
+---
 
-* [@kaiser-data](https://github.com/kaiser-data)
-* [@Marinaropc](https://github.com/Marinaropc)
-* [@Suma-H](https://github.com/Suma-H)
-* [@samypt](https://github.com/samypt)
-* [@SenorGunter](https://github.com/SenorGunter)
+## How It Works
 
+1. **Register:** Sign up for the service.
+2. **Send SMS Commands:** For example, text `Stock AAPL` for Apple stock updates.
+3. **Receive Updates:** Get instant stock details via SMS.
+4. **Compare Values:** Use commands like `COMPARE AAPL 7` to analyze historical trends.
+
+---
+
+## Demonstration
+
+Below is an example of how the service looks on a smartphone:
+
+
+
+**Example Dialogue:**
+
+<img src="screenshot.png" alt="App Logo" width="250" />
+
+
+---
+
+## Quick Setup
+
+1. Clone the repository:
+   ```bash
+    git clone https://github.com/saifmasterschool/allyoucaneat.git
+   ```
+2. Initialize the database:
+   ```bash
+   python3 db-setup.py
+   ````
+3. Manage users:
+   `python usermgmt.py`
+4. Install requirements:
+   `pip install -r requirements.txt`
+5. Start the service:
+   `python main.py`
+
+---
+
+## Team: Wolves of Wall Street (WoWS)
+
+Developed by:
+- [@kaiser-data](https://github.com/kaiser-data)
+- [@Marinaropc](https://github.com/Marinaropc)
+- [@Suma-H](https://github.com/Suma-H)
+- [@samypt](https://github.com/samypt)
+- [@SenorGunter](https://github.com/SenorGunter)
+
+Mentored by:
+- [@saifmasterschool](https://github.com/saifmasterschool)
+
+---
+
+## Achievements
+
+**1st Place Winner** - Masterschool Hackathon (January 2025)
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+Experience the simplicity and reliability of stock updates with **SMS - Stock Alert Service**!
