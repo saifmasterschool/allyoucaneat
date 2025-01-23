@@ -10,6 +10,7 @@ The **SMS - Stock Alert Service** is a simple and fast solution for receiving re
 
 This service ensures accessibility and convenience for users who need quick stock updates without relying on constant internet connectivity.
 
+
 ---
 <img src="logo.png" alt="App Logo" width="150" />
 
@@ -53,32 +54,13 @@ This service ensures accessibility and convenience for users who need quick stoc
 Below is an example of how the service looks on a smartphone:
 
 
-
 **Example Dialogue:**
 
-<img src="screenshot.png" alt="App Logo" width="250" />
+<img src="screenshot.png" alt="App Logo" width="200" />
 
 
 ---
 
-## Quick Setup
-
-1. Clone the repository:
-   ```bash
-    git clone https://github.com/saifmasterschool/allyoucaneat.git
-   ```
-2. Initialize the database:
-   ```bash
-   python3 db-setup.py
-   ````
-3. Manage users:
-   `python usermgmt.py`
-4. Install requirements:
-   `pip install -r requirements.txt`
-5. Start the service:
-   `python main.py`
-
----
 
 ## Team: Wolves of Wall Street (WoWS)
 
