@@ -12,7 +12,7 @@ This service ensures accessibility and convenience for users who need quick stoc
 
 
 ---
-<img src="logo.png" alt="App Logo" width="150" />
+<img src="logo.png" alt="App Logo" />
 
 ## Key Features
 
